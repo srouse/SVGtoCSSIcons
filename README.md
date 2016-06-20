@@ -1,0 +1,8 @@
+
+# SVGtoCSSIcons
+
+## Synopsis
+
+
+
+## Installation

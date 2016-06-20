@@ -1,0 +1,25 @@
+{
+	"name": "svgtocssicons",
+	"description": "Takes a bunch of SVG icons and creates CSS based icons of various specific sizes",
+	"author": "srouse",
+	"version": "0.0.1",
+	"dependencies": {
+		"file-save":"~0.2"
+	},
+	"devDependencies": {
+	    "grunt": "^0.4.5"
+	},
+	"main": "tasks/svgtocssicons.js",
+	"scripts": {
+	    "test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/srouse/SVGtoCSSIcons.git"
+	},
+	"license": "ISC",
+	"bugs": {
+		"url": "https://www.scottrouse.me/bugs"
+	},
+	"homepage": "https://www.scottrouse.me"
+}
