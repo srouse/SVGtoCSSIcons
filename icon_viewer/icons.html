@@ -30,7 +30,7 @@ return j.call(r(a),c)})),b))for(;i>h;h++)b(a[h],c,g?d:d.call(a[h],h,b(a[h],c)));
                 if ( style_data.length > index ) {
                     style_datum = style_data[index];
 
-                    $.ajax( style_datum + ".json" )
+                    $.ajax( style_datum + ".json?" + Math.random() )
                         .done(function( icon_data ) {
                             var html = [],icon,style;
 
@@ -59,7 +59,7 @@ return j.call(r(a),c)})),b))for(;i>h;h++)b(a[h],c,g?d:d.call(a[h],h,b(a[h],c)));
 
                             }
 
-                            html.push("<link rel='stylesheet' href='" + style_datum + ".css'>");
+                            html.push("<link rel='stylesheet' href='" + style_datum + ".css?" + Math.random() + "'>");
                             html.push("<hr style='width:99%;' />");
 
                             $(target).append( html.join("") );

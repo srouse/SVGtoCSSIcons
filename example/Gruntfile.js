@@ -16,7 +16,17 @@ module.exports = function(grunt) {
 
 
     configObj.svgtocssicons = configObj.svgtocssicons || {};
-    configObj.svgtocssicons["icons-16-32-64"] = {
+    configObj.svgtocssicons["icons-all"] = {
+        files:{
+            'dist/icons-all':[
+                'source/_export/*.svg'
+            ]
+        },
+        options:{
+            prefix:"o-icon-",
+        }
+    };
+    /*configObj.svgtocssicons["icons-16-32-64"] = {
         files:{
             'dist/icons-16-32-64':[
                 'source/_export/*.svg'
@@ -43,7 +53,7 @@ module.exports = function(grunt) {
             prefix:"o-icon-",
             sizes:[24,48,96]
         }
-    };
+    };*/
 
     configObj.watch = configObj.watch || {};
     configObj.watch[project] = {

@@ -17,14 +17,14 @@ module.exports = function (grunt) {
         var files = this.files.slice();
         var options = this.options();
 
-        var type = ( options.type ) ? options.type : "scss";
+        var type = "css";//( options.type ) ? options.type : "css";
         var prefix_filter = ( options.prefix_filter ) ? options.prefix_filter : false;
         var suffix_filter = ( options.suffix_filter ) ? options.suffix_filter : false;
 
         var prefix = ( options.prefix ) ? options.prefix : false;
         var mixin_name = ( options.mixin_name ) ? options.mixin_name : "all_icons";
 
-        var sizes = ( options.sizes ) ? options.sizes : [100];
+        var sizes;// determined from file name...// = ( options.sizes ) ? options.sizes : [100];
         var default_size = ( options.default_size ) ? options.default_size : 100;
 
         var preserveAspectRatio = ( options.preserveAspectRatio ) ? options.preserveAspectRatio : false;
@@ -43,7 +43,7 @@ module.exports = function (grunt) {
             var selector,fileName,fileName_arr,svg_less_encoded,svg_css_encoded,svg_scss_encoded;
             var selector_mixin_name;
 
-            if ( type == "scss" ) {
+            /*if ( type == "scss" ) {
                 scss.push( scssFunctions() );
                 scss_macro.push("\n@mixin " + mixin_name + "(");
                 scss_macro.push("\t$suffix : '' , $color: '' , $preserveAspectRatio : 'xMaxYMax meet',");
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
                 less_macro.push("\n." + mixin_name + "( @suffix : '' , @color : '', @preserveAspectRatio : 'xMaxYMax meet', @extra_css : '', @extra_defs : '' ) {\n");
             }else{
                 //css.push(  );
-            }
+            }*/
 
             for ( var i=0; i<svgFiles.length; i++ ) {
                 fileName = svgFiles[i];
@@ -87,7 +87,7 @@ module.exports = function (grunt) {
                 selector_mixin_name = mixin_name + "-" + selector;
 
                 svg_css_encoded = grunt.file.read( fileName ).replace(/\'/g, "\"" );
-                if ( type != "css" ) {
+                /*if ( type != "css" ) {
                     svg_css_encoded = svg_css_encoded.replace( /<defs>[\s\S]*?<\/defs>/g , "" );
 
                     if ( svg_css_encoded.indexOf("<defs>") == -1 ) {//sometimes defs and styles are missing...
@@ -96,13 +96,13 @@ module.exports = function (grunt) {
 
                     svg_css_encoded = svg_css_encoded.replace(/(preserveAspectRatio=')([a-zA-Z0-9:;\.\s\(\)\-\,]*)(')/ig, "" );
                     svg_css_encoded = svg_css_encoded.replace( /<svg / , "<svg preserveAspectRatio=\"xMaxYMax meet\" " );
-                }
+                }*/
 
                 svg_css_encoded = encodeURIComponent( svg_css_encoded );
 
                 if ( type == "scss" ) {
                     // SCSS
-                    svg_scss_encoded = svg_css_encoded.replace(
+                    /*svg_scss_encoded = svg_css_encoded.replace(
                         /\%20preserveAspectRatio\%3D\%22xMaxYMax\%20meet\%22/ ,
                         " preserveAspectRatio%3D%22#{unquote(svg-url( $preserveAspectRatio ))}%22"
                     );
@@ -136,7 +136,7 @@ module.exports = function (grunt) {
                     scss_macro.push("\t\t\t}");
                     scss_macro.push("\t\t}");
                     scss_macro.push("\t}");
-                    */
+                    * /
 
                     var js_object = {
                         name:selector,
@@ -157,11 +157,11 @@ module.exports = function (grunt) {
                         });
                     }
 
-                    javascript_array.push( js_object );
+                    javascript_array.push( js_object );*/
 
                 }else if ( type == "less" ){
                     // LESS
-                    svg_less_encoded = svg_css_encoded.replace(
+                    /*svg_less_encoded = svg_css_encoded.replace(
                         /\%20preserveAspectRatio\%3D\%22xMaxYMax\%20meet\%22/ ,
                         " preserveAspectRatio%3D%22@{preserveAspectRatio-encoded}%22"
                     );
@@ -182,8 +182,13 @@ module.exports = function (grunt) {
                                 "'); \n\t\tbackground-repeat: no-repeat;}" );
                     less_macro.push("\t." + selector + "@{suffix} {");
                     less_macro.push("\t\t." + selector + "( @color, @preserveAspectRatio , @extra_css , @extra_defs );");
-                    less_macro.push("\t}\n");
+                    less_macro.push("\t}\n");*/
                 }else{
+
+                    var filename_info = getSizesFromFilename( selector );
+                    sizes = filename_info.size_info;
+                    selector = filename_info.name;
+
                     var js_object = {
                         name:selector,
                         styles:[]
@@ -204,7 +209,6 @@ module.exports = function (grunt) {
                     for ( var s=0; s<sizes.length; s++ ) {
                         size = sizes[s];
                         css.push("\t." + selector + "-" + size + " {");
-                        //css.push("\t\t@extend ." + selector_mixin_name + "#{$suffix};");
                         css.push("\t\tbackground-size: " + size + "px " + size + "px;");
                         css.push("\t}");
 
@@ -219,17 +223,16 @@ module.exports = function (grunt) {
             }
 
             if ( type == "scss" ) {
-                scss_macro.push("}\n");
-                grunt.file.write( file.dest + ".scss" , scss.join("\n") + "\n\n\n" + scss_macro.join("\n") );
+                //scss_macro.push("}\n");
+                //grunt.file.write( file.dest + ".scss" , scss.join("\n") + "\n\n\n" + scss_macro.join("\n") );
             }else if ( type == "less" ){
-                less_macro.push("}\n");
-                grunt.file.write( file.dest + ".less" , less.join("\n") + "\n\n\n" + less_macro.join("\n") );
+                //less_macro.push("}\n");
+                //grunt.file.write( file.dest + ".less" , less.join("\n") + "\n\n\n" + less_macro.join("\n") );
             }else{
                 grunt.file.write( file.dest + ".css" , css.join("\n") );
             }
 
             grunt.file.write( file.dest + ".json" , JSON.stringify( javascript_array ) );
-
 
             var dest_filename_array = file.dest.split("/");
             var dest_filename = dest_filename_array.pop();
@@ -248,6 +251,26 @@ module.exports = function (grunt) {
         process();
 
 
+        function getSizesFromFilename ( filename ) {
+            //var filename_arr = filename.split(".");
+            //filename_arr.unshift();
+            var filename_arr = filename.split("-");
+            var size_info = filename_arr.pop();
+            var size_info_arr = size_info.split(",");
+
+            var final_size_info = [];
+            for ( var i=0; i<size_info_arr.length; i++ ) {
+                var size = parseInt( size_info_arr[i] );
+                if ( size != 0 && !isNaN( size ) ) {
+                    final_size_info.push( size );
+                }
+            }
+
+            return {
+                size_info:final_size_info,
+                name:filename_arr.join("-")
+            };
+        }
 
 
         function scssFunctions () {
