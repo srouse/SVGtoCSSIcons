@@ -230,6 +230,7 @@ module.exports = function (grunt) {
                 //grunt.file.write( file.dest + ".less" , less.join("\n") + "\n\n\n" + less_macro.join("\n") );
             }else{
                 grunt.file.write( file.dest + ".css" , css.join("\n") );
+                grunt.file.write( file.dest + ".scss" , css.join("\n") );// scss needs the extenstion to work correctly...
             }
 
             grunt.file.write( file.dest + ".json" , JSON.stringify( javascript_array ) );
