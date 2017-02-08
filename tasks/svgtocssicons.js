@@ -21,6 +21,8 @@ module.exports = function (grunt) {
         var prefix_filter = ( options.prefix_filter ) ? options.prefix_filter : false;
         var suffix_filter = ( options.suffix_filter ) ? options.suffix_filter : false;
 
+        var sprite_direction = ( options.sprite_direction ) ? options.sprite_direction : false;
+
         var prefix = ( options.prefix ) ? options.prefix : false;
         var mixin_name = ( options.mixin_name ) ? options.mixin_name : "all_icons";
 
@@ -194,7 +196,6 @@ module.exports = function (grunt) {
                         styles:[]
                     };
 
-
                     var size,main_selectors = [];
                     for ( var s=0; s<sizes.length; s++ ) {
                         size = sizes[s];
@@ -209,7 +210,15 @@ module.exports = function (grunt) {
                     for ( var s=0; s<sizes.length; s++ ) {
                         size = sizes[s];
                         css.push("\t." + selector + "-" + size + " {");
-                        css.push("\t\tbackground-size: " + size + "px " + size + "px;");
+
+                        if ( options.sprite_direction == "horizontal" ) {
+                            css.push("\t\tbackground-size: auto " + size + "px;");
+                        }else if ( options.sprite_direction == "vertical"  ) {
+                            css.push("\t\tbackground-size: " + size + "px auto;");
+                        }else{
+                            css.push("\t\tbackground-size: " + size + "px " + size + "px;");
+                        }
+
                         css.push("\t}");
 
                         js_object.styles.push({

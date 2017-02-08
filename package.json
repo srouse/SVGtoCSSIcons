@@ -2,7 +2,7 @@
 	"name": "svgtocssicons",
 	"description": "Takes a bunch of SVG icons and creates CSS based icons of various specific sizes",
 	"author": "srouse",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"dependencies": {
 		"file-save":"~0.2"
 	},
