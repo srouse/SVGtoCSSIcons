@@ -213,8 +213,10 @@ module.exports = function (grunt) {
 
                         if ( options.sprite_direction == "horizontal" ) {
                             css.push("\t\tbackground-size: auto " + size + "px;");
+                            css.push("\t\tbackground-position: 0px center;");
                         }else if ( options.sprite_direction == "vertical"  ) {
                             css.push("\t\tbackground-size: " + size + "px auto;");
+                            css.push("\t\tbackground-position: center 0px;");
                         }else{
                             css.push("\t\tbackground-size: " + size + "px " + size + "px;");
                         }
