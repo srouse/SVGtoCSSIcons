@@ -190,6 +190,7 @@ module.exports = function (grunt) {
                     var filename_info = getSizesFromFilename( selector );
                     sizes = filename_info.size_info;
                     selector = filename_info.name;
+                    var sprite = filename_info.sprite;
 
                     var js_object = {
                         name:selector,
@@ -211,12 +212,14 @@ module.exports = function (grunt) {
                         size = sizes[s];
                         css.push("\t." + selector + "-" + size + " {");
 
-                        if ( options.sprite_direction == "horizontal" ) {
+                        if ( sprite == "horizontal" ) {
                             css.push("\t\tbackground-size: auto " + size + "px;");
                             css.push("\t\tbackground-position: 0px center;");
-                        }else if ( options.sprite_direction == "vertical"  ) {
+                            css.push("\t\twidth: " + size + "px; height: " + size + "px;");
+                        }else if ( sprite == "vertical"  ) {
                             css.push("\t\tbackground-size: " + size + "px auto;");
                             css.push("\t\tbackground-position: center 0px;");
+                            css.push("\t\twidth: " + size + "px; height: " + size + "px;");
                         }else{
                             css.push("\t\tbackground-size: " + size + "px " + size + "px;");
                         }
@@ -225,7 +228,8 @@ module.exports = function (grunt) {
 
                         js_object.styles.push({
                             name:selector + "-" + size,
-                            size:size
+                            size:size,
+                            sprite:sprite
                         });
                     }
 
@@ -266,6 +270,21 @@ module.exports = function (grunt) {
         function getSizesFromFilename ( filename ) {
             //var filename_arr = filename.split(".");
             //filename_arr.unshift();
+
+            if ( filename.indexOf(" copy") == filename.length - 5 ) {
+                console.error("COPY!");
+            }
+
+            var sprite = false;
+            if ( filename.indexOf("-hsprite") == filename.length - 8 ) {
+                sprite = "horizontal";
+                filename = filename.substring( 0 , filename.indexOf("-hsprite") );
+            }
+            if ( filename.indexOf("-vsprite") == filename.length - 8 ) {
+                sprite = "vertical";
+                filename = filename.substring( 0 , filename.indexOf("-vsprite") );
+            }
+
             var filename_arr = filename.split("-");
             var size_info = filename_arr.pop();
             var size_info_arr = size_info.split(",");
@@ -280,7 +299,8 @@ module.exports = function (grunt) {
 
             return {
                 size_info:final_size_info,
-                name:filename_arr.join("-")
+                name:filename_arr.join("-"),
+                sprite:sprite
             };
         }
 
