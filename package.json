@@ -2,12 +2,13 @@
 	"name": "svgtocssicons",
 	"description": "Takes a bunch of SVG icons and creates CSS based icons of various specific sizes",
 	"author": "srouse",
-	"version": "0.0.9",
+	"version": "0.1.0",
 	"dependencies": {
 		"file-save":"~0.2"
 	},
 	"devDependencies": {
-	    "grunt": "^0.4.5"
+			"eslint": "3.19.0",
+	    "grunt": "^1.0.1"
 	},
 	"main": "tasks/svgtocssicons.js",
 	"scripts": {
