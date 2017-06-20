@@ -1,0 +1,29 @@
+{
+  "parser": "babel-eslint",
+	"parserOptions": {
+		"sourceType": "module",
+		"ecmaVersion": 6,
+		"ecmaFeatures": {
+			"jsx": true,
+			"experimentalObjectRestSpread": true
+		}
+	},
+  "env": {
+    "es6": true,
+		"node": true,
+		"browser": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+		"no-console":0,
+    "comma-dangle": ["off"],
+    "no-unused-vars": ["warn"],
+    "object-curly-spacing": ["off"],
+    "padded-blocks": ["off"],
+    "react/jsx-closing-bracket-location": ["off"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-space-before-closing": ["off"],
+    "react/prefer-stateless-function": ["off"],
+    "no-underscore-dangle": [ "error", { "allowAfterThis": true }]
+  }
+}
